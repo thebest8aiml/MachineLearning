@@ -29,6 +29,15 @@ public class FoodCollectorAgent : Agent
     public GameObject myLaser;
     public bool contribute;
     public bool useVectorObs;
+
+    // Agent life
+    public float maxLife = 100, life;
+    public bool dead = false;
+    public GameObject model;
+    public BoxCollider boxCollider;
+    public float foodScaling = 1.1f;
+    public float poisonScaling = 0.75f;
+    public GameObject gridSensor;
     [Tooltip("Use only the frozen flag in vector observations. If \"Use Vector Obs\" " +
              "is checked, this option has no effect. This option is necessary for the " +
              "VisualFoodCollector scene.")]
@@ -36,6 +45,28 @@ public class FoodCollectorAgent : Agent
 
     EnvironmentParameters m_ResetParams;
 
+    public override void OnActionReceived(ActionBuffers actionBuffers)
+    {
+        if(!dead)
+        {
+            life -= 0.05f;
+            //AddReward(0.01f);
+            if (life <= 0) Die();
+            MoveAgent(actionBuffers);
+        }
+    }
+    public void Die()
+    {
+        gameObject.GetComponentInChildren<Renderer>().material = badMaterial;
+        dead = true;
+        AddReward(-10f);
+        m_MyArea.CheckAllDead();
+    }
+    public void Start()
+    {
+        life = maxLife;
+        boxCollider = GetComponent<BoxCollider>();
+    }
     public override void Initialize()
     {
         m_AgentRb = GetComponent<Rigidbody>();
@@ -50,6 +81,8 @@ public class FoodCollectorAgent : Agent
         if (useVectorObs)
         {
             var localVelocity = transform.InverseTransformDirection(m_AgentRb.velocity);
+            sensor.AddObservation(model.transform.localScale.x);
+            sensor.AddObservation(life);
             sensor.AddObservation(localVelocity.x);
             sensor.AddObservation(localVelocity.z);
             sensor.AddObservation(m_Frozen);
@@ -159,9 +192,14 @@ public class FoodCollectorAgent : Agent
 
     void Poison()
     {
+        maxLife -= 10;
+        life -= 20;
         m_Poisoned = true;
         m_EffectTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = badMaterial;
+        model.transform.localScale *= poisonScaling;
+        gridSensor.transform.localPosition += boxCollider.size.x * (1 - poisonScaling) / 2 * new Vector3(0, 1, 0);
+        boxCollider.size *= poisonScaling;
     }
 
     void Unpoison()
@@ -172,21 +210,20 @@ public class FoodCollectorAgent : Agent
 
     void Satiate()
     {
+        maxLife += 5;
+        life = Mathf.Min(maxLife, life + 10);
         m_Satiated = true;
         m_EffectTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
+        model.transform.localScale *= foodScaling;
+        gridSensor.transform.localPosition -= boxCollider.size.x * (foodScaling - 1f) / 2 * new Vector3(0, 1, 0);
+        boxCollider.size *= foodScaling;
     }
 
     void Unsatiate()
     {
         m_Satiated = false;
         gameObject.GetComponentInChildren<Renderer>().material = normalMaterial;
-    }
-
-    public override void OnActionReceived(ActionBuffers actionBuffers)
-
-    {
-        MoveAgent(actionBuffers);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -217,8 +254,13 @@ public class FoodCollectorAgent : Agent
         Unfreeze();
         Unpoison();
         Unsatiate();
+        life = maxLife;
+        dead = false;
         m_Shoot = false;
         m_AgentRb.velocity = Vector3.zero;
+        model.transform.localScale = Vector3.one;
+        gridSensor.transform.localPosition = Vector3.zero;
+        boxCollider.size = Vector3.one;
         myLaser.transform.localScale = new Vector3(0f, 0f, 0f);
         transform.position = new Vector3(Random.Range(-m_MyArea.range, m_MyArea.range),
             2f, Random.Range(-m_MyArea.range, m_MyArea.range))
@@ -234,7 +276,7 @@ public class FoodCollectorAgent : Agent
         {
             Satiate();
             collision.gameObject.GetComponent<FoodLogic>().OnEaten();
-            AddReward(1f);
+            AddReward(2f);
             if (contribute)
             {
                 m_FoodCollecterSettings.totalScore += 1;
