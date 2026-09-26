@@ -23,3 +23,31 @@ behaviors:
     max_steps: 15000000
     time_horizon: 64
     summary_freq: 60000
+
+
+# ---Information---
+
+# trainer_type: poca --> multi agent collaboration algorithm. Each agent sees the other's observations during training but acts independently
+# batch_size: 1024 --> Number of experiences used per update. This is large because for multi-agent training we need more data per update
+# buffer_size : 10240 --> Total experiences stored before updating. This is 10x more than batch so we take 10 batches before starting learning
+# learning_rate: 0.0003 --> How fast the neural network updates the weights.
+# Beta: 0.01 --> Entropy. This is a high value so the agents can explore more
+# max_steps: 15000000 --> Total training steps. Very large number, run will take hours.
+# hidden_units : how many neurons per layer. The more neurons, more capacity to learn complex patterns. But, more ram usage amd slower
+# num_layers: how many hidden layers
+
+
+# Prediction algorithm features
+
+# Handle many features. We have many columns like hyperparameters, hardware specs, game identifiers.
+# Handle mixed data types. We have both numerical and categorical variables
+# Handle non-linear relationships.
+# Be strong with outliers. Some training runs may take a long time or use a lot of memory and crash.
+# Scale to many rows (data)
+# Provide feature importance. We need to know which settings matter most for prediction.
+
+# Possible research questions
+# Can we predict how long a training run will take? (given)
+# Can we predict how much peak RAM a training run will use? (given)
+# Can a model trained on two games predict training time for a third, unseen one? (mine - Niko)
+# Which single hyperparameter has the strongest effect on training time and which ones has the least. (mine - Niko)
