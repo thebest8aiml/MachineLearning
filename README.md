@@ -9,3 +9,5 @@ The AI & ML project group 9 repository
 
 - [Group Portfolio](https://docs.google.com/spreadsheets/d/1QNSoflEOmblPfd6Xe9g_TBIu-Wbc2SA-O-6_zRwm5KU/edit?gid=1122333801#gid=1122333801)
 - [Overleaf project](https://www.overleaf.com/project/6ab524692123b56ccb509486) _(contains stuff like reports, specific skill classes and other submissions, some research results, and other information we have on the project)_
+- [Canvas Poject Page](https://canvas.maastrichtuniversity.nl/courses/30621/modules)
+
