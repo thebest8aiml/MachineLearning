@@ -1,0 +1,4 @@
+run_id,game,date,group_name,max_steps,learning_rate,batch_size,buffer_size,hidden_units,num_layers,beta,cpu_cores,ram_gb,gpu_model,time_sec,peak_ram_mb,final_reward,steps_to_90pct
+run_001,PushBlockCollab,2026-10-20,Group1,100000,0.0003,1024,10240,256,2,0.01,8,16,M4 Pro,3600.0,1200.0,95.2,45000
+run_002,FoodCollector,2026-10-20,Group2,500000,0.0003,256,4096,256,3,0.01,16,32,RTX 3080,5400.0,2500.0,95.2,50000 
+run_003,Worm,2026-10-20,Group3,500000,0.0005,128,2048,128,2,0.005,8,16,M3 Pro,2400.0,850.0,98.1,35000
