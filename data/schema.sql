@@ -1,6 +1,7 @@
 CREATE TABLE runs (
     -- Identifiers
-    run_id TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id TEXT NOT NULL,
     game TEXT NOT NULL,
     date TEXT,
     group_name TEXT,
@@ -23,5 +24,15 @@ CREATE TABLE runs (
     time_sec REAL,
     peak_ram_mb REAL,
     final_reward REAL,
-    steps_to_90pct INTEGER
+    avg_ram_mb REAL,
+
+    -- Specific for games
+    steps_to_90pct INTEGER, 
+    food_eaten INTEGER,         --food collector
+    poison_eaten INTEGER,       --food collector
+    final_size REAL,            --food collector
+    block_goal_reached INTEGER, --Push block
+    worm_length REAL,            -- Worm
+
+    UNIQUE(run_id, group_name)
 );
