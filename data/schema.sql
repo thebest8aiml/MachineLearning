@@ -7,6 +7,7 @@ CREATE TABLE runs (
     group_name TEXT,
 
     -- Hyperparameters
+    trainer TEXT,
     max_steps INTEGER,
     learning_rate REAL,
     batch_size INTEGER,
