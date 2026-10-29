@@ -1,0 +1,7 @@
+run_id,run_date,seed,realdata,batch_size,buffer_size,hidden_layer,learning_rate,beta,epsilon,lambd,num_epoch,gamma,time_horizon,max_steps,cpu_logical_cores,cpu_model,system_ram,system_vram,gpu_model,training_duration,peak_CPU_usage,peak_RAM_usage,peak_VRAM_usage
+worm_ppo_baseline_01,2026-10-18T09:14:27,42,false,2024,20240,512,0.0003,0.005,0.2,0.95,3,0.995,1000,7000000,32,AMD Ryzen 9 7950X,64,24,NVIDIA GeForce RTX 4090,6840.5,81.7,42.3,9.8
+worm_ppo_baseline_02,2026-10-19T16:42:08,31415,false,2024,20240,512,0.0003,0.005,0.2,0.95,3,0.995,1000,7000000,32,Intel Core i9-13900K,64,16,NVIDIA GeForce RTX 4080,7925.3,88.4,39.7,8.6
+worm_ppo_explore_01,2026-10-20T11:05:53,2026,false,1024,20480,256,0.0002,0.01,0.15,0.92,4,0.99,1000,5000000,16,AMD Ryzen 7 7800X3D,32,12,NVIDIA GeForce RTX 4070 Ti,5120.8,74.2,21.4,6.2
+worm_ppo_deep_01,2026-10-22T20:31:44,7,false,2024,20240,1024,0.0001,0.003,0.25,0.97,5,0.995,500,10000000,20,Intel Core i7-12700H,32,8,NVIDIA GeForce RTX 3070 Ti Laptop GPU,14380.6,91.3,27.9,7.1
+worm_ppo_fast_01,2026-10-23T08:17:19,1337,false,4096,40960,512,0.0005,0.004,0.18,0.95,2,0.994,1000,6000000,24,AMD Ryzen 9 7900X,64,12,NVIDIA GeForce RTX 4060 Ti,4680.4,86.9,34.1,6.7
+worm_ppo_longrun_01,2026-10-24T02:46:15,271828,false,2048,20480,768,0.00025,0.006,0.22,0.96,3,0.996,2000,8000000,36,Intel Core i9-14900K,96,16,NVIDIA GeForce RTX 4090,12540.2,84.6,51.2,11.3

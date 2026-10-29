@@ -1,0 +1,21 @@
+run_id,run_date,environment,trainer,random_seed,record_status,learning_rate,batch_size,buffer_size,hidden_units,num_layers,beta,epsilon,lambd,num_epoch,gamma,time_horizon,max_steps,cpu_logical_cores,system_ram_gb,gpu_model,training_time_seconds,peak_training_process_ram_mb,final_mean_group_reward,reward_threshold,steps_to_threshold
+pbc_run_01,2026-10-05,PushBlockCollab,poca,2998,illustrative,0.0003,512,5120,512,1,0.005,0.1,0.95,5,0.995,64,500000,12,16.0,none,689.5,1155.6,2.497,2.0,330000
+pbc_run_02,2026-10-05,PushBlockCollab,ppo,9431,illustrative,0.0001,512,10240,512,3,0.01,0.3,0.95,5,0.995,256,1000000,12,16.0,none,1461.3,1689.5,1.963,2.0,
+pbc_run_03,2026-10-07,PushBlockCollab,poca,6239,illustrative,0.0003,512,5120,256,1,0.005,0.2,0.95,5,0.99,128,500000,12,16.0,none,571.1,1070.0,2.601,2.0,300000
+pbc_run_04,2026-10-07,PushBlockCollab,poca,6830,illustrative,0.0003,512,5120,128,1,0.001,0.1,0.9,3,0.995,64,1000000,16,64.0,NVIDIA GeForce RTX 4070,592.0,1040.8,2.757,2.0,530000
+pbc_run_05,2026-10-07,PushBlockCollab,ppo,4995,illustrative,0.0003,512,10240,256,3,0.001,0.2,0.9,3,0.99,256,2000000,8,16.0,none,3177.2,1435.1,3.411,2.0,980000
+pbc_run_06,2026-10-08,PushBlockCollab,poca,2249,illustrative,0.0001,512,10240,256,1,0.001,0.3,0.95,3,0.99,128,500000,8,16.0,none,679.3,1301.0,1.747,2.0,
+pbc_run_07,2026-10-12,PushBlockCollab,poca,7969,illustrative,0.001,1024,10240,512,1,0.005,0.3,0.99,3,0.99,128,1000000,16,64.0,NVIDIA GeForce RTX 4070,743.3,1368.3,2.346,2.0,660000
+pbc_run_08,2026-10-13,PushBlockCollab,poca,554,illustrative,0.001,512,10240,512,3,0.001,0.3,0.99,5,0.99,256,2000000,16,64.0,NVIDIA GeForce RTX 4070,1693.3,1694.7,3.009,2.0,1030000
+pbc_run_09,2026-10-13,PushBlockCollab,poca,4679,illustrative,0.0003,1024,20480,256,3,0.01,0.2,0.9,3,0.99,128,2000000,8,16.0,none,3079.1,1868.5,3.586,2.0,820000
+pbc_run_10,2026-10-13,PushBlockCollab,poca,2848,illustrative,0.001,512,5120,128,1,0.005,0.3,0.99,5,0.995,128,2000000,12,16.0,none,1986.0,1029.6,2.473,2.0,1280000
+pbc_run_11,2026-10-14,PushBlockCollab,ppo,8208,illustrative,0.0003,512,5120,512,3,0.01,0.1,0.99,5,0.995,256,500000,12,16.0,none,742.7,1451.6,2.737,2.0,280000
+pbc_run_12,2026-10-16,PushBlockCollab,poca,9119,illustrative,0.001,1024,10240,128,2,0.001,0.3,0.99,5,0.99,256,1000000,8,16.0,none,1318.2,1321.6,2.166,2.0,820000
+pbc_run_13,2026-10-16,PushBlockCollab,poca,1190,illustrative,0.0003,512,10240,256,1,0.001,0.1,0.99,3,0.995,128,500000,16,64.0,NVIDIA GeForce RTX 4070,341.6,1282.8,2.609,2.0,300000
+pbc_run_14,2026-10-19,PushBlockCollab,ppo,52,illustrative,0.001,1024,20480,128,3,0.01,0.1,0.9,3,0.99,128,2000000,8,16.0,none,2778.8,1735.0,2.203,2.0,1460000
+pbc_run_15,2026-10-19,PushBlockCollab,poca,8957,illustrative,0.0001,1024,10240,512,2,0.001,0.3,0.9,3,0.99,64,500000,12,16.0,none,694.0,1536.3,1.982,2.0,
+pbc_run_16,2026-10-20,PushBlockCollab,poca,8728,illustrative,0.0003,1024,10240,256,1,0.001,0.2,0.99,5,0.995,64,1000000,12,16.0,none,1103.6,1244.2,3.191,2.0,500000
+pbc_run_17,2026-10-20,PushBlockCollab,poca,5774,illustrative,0.0001,256,2560,128,2,0.005,0.3,0.9,3,0.995,256,500000,16,64.0,NVIDIA GeForce RTX 4070,350.9,980.2,1.577,2.0,
+pbc_run_18,2026-10-21,PushBlockCollab,poca,8325,illustrative,0.0003,512,5120,256,1,0.001,0.3,0.99,3,0.99,64,1000000,16,64.0,NVIDIA GeForce RTX 4070,645.0,1059.4,3.127,2.0,490000
+pbc_run_19,2026-10-22,PushBlockCollab,ppo,7745,illustrative,0.001,256,2560,256,1,0.01,0.2,0.9,3,0.995,128,1000000,8,16.0,none,1317.6,967.7,2.17,2.0,710000
+pbc_run_20,2026-10-22,PushBlockCollab,poca,1314,illustrative,0.0003,512,10240,128,1,0.01,0.1,0.9,5,0.99,64,1000000,8,16.0,none,1223.8,1234.7,2.576,2.0,540000
