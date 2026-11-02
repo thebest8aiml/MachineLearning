@@ -1,0 +1,1 @@
+id,game,date,group_name,trainer,max_steps,learning_rate,batch_size,buffer_size,hidden_units,num_layers,beta,cpu_cores,ram_gb,gpu_model,time_sec,peak_ram_mb,final_reward,avg_ram_mb,steps_to_90pct, food_eaten, poison_eaten, final_size, block_goal_reached, worm_length
