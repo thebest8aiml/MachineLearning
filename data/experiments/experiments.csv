@@ -1,0 +1,28 @@
+run_id,game,max_steps,learning_rate, hidden_units
+1,pushblock,100000,0.0001,64 
+2,foodcollector,100000,0.0001,128 
+3,worm,100000,0.0001,256 
+4,pushblock,100000,0.0003,64 
+5,foodcollector,100000,0.0003,128 
+6,worm,100000,0.0003,256 
+7,pushblock,100000,0.001,64 
+8,foodcollector,100000,0.001,128 
+9,worm,100000,0.001,256 
+10,pushblock,500000,0.0001,64 
+11,foodcollector,500000,0.0001,128 
+12,worm,500000,0.0001,256 
+13,pushblock,500000,0.0003,64 
+14,foodcollector,500000,0.0003,128 
+15,worm,500000,0.0003,256 
+16,pushblock,500000,0.001, 64 
+17,foodcollector,500000,0.001,128 
+18,worm,500000,0.001,256 
+19,pushblock,1000000,0.0001,64 
+20,foodcollector,1000000,0.0001,128 
+21,worm,1000000,0.0001,256 
+22,pushblock,1000000,0.0003,64 
+23,foodcollector,1000000,0.0003,128 
+24,worm,1000000,0.0003,256 
+25,pushblock,1000000,0.001,64 
+26,foodcollector,1000000,0.001,128 
+27,worm,1000000,0.001,256 
