@@ -45,9 +45,9 @@ namespace Unity.MLAgentsExamples
 	    entry.Add("gamma", "0.995");
 	    entry.Add("strength", "1.0");
 	    entry.Add("max_steps", "7000000");
-            // resource allocation statistics
+    	// resource allocation statistics and time of current run
 	    
-            Debug.Log("hello");
+        Debug.Log("hello");
         }
     }
 }
