@@ -3,10 +3,6 @@ using YamlDotNet.Serialization;
 
 namespace Unity.MLAgentsExamples
 {
-    /// <summary>
-    /// Prints "hello" every time a cube raises <see cref="CubeMoveHook.CubeMoved"/>.
-    /// Add this component to any GameObject in the scene, or to the target cube.
-    /// </summary>
     public class HelloOnCubeMove : MonoBehaviour
     {
         void OnEnable()
