@@ -35,10 +35,14 @@ public class FoodCollectorArea : Area
         }
     }
 
-    public void ResetFoodArea(GameObject[] agents)
+    public void ResetFoodArea()
     {
-        foreach (GameObject agent in agents)
+        int id = 0;
+        foreach (FoodCollectorAgent agentScript in agents)
         {
+            GameObject agent = agentScript.gameObject;
+            agent.GetComponent<FoodCollectorAgent>().agentID = id;
+            id += 1;
             if (agent.transform.parent == gameObject.transform)
             {
                 agent.transform.position = new Vector3(Random.Range(-range, range), 2f,
@@ -66,11 +70,6 @@ public class FoodCollectorArea : Area
             agent.EndEpisode();
         }
 
-        GameObject[] agentObjects = new GameObject[agents.Count];
-        for (int i = 0; i < agents.Count; i++) agentObjects[i] = agents[i].gameObject;
-        ResetFoodArea(agentObjects); // respawns food + repositions agents
-    }
-    public override void ResetArea()
-    {
+        ResetFoodArea();
     }
 }

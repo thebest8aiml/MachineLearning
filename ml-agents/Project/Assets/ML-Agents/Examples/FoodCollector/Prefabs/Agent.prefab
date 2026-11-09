@@ -322,8 +322,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 10000
-  m_StepCount: 0
+  MaxStep: 5000
   area: {fileID: 0}
   turnSpeed: 300
   moveSpeed: 2
@@ -334,15 +333,19 @@ MonoBehaviour:
   myLaser: {fileID: 742597886178865080}
   contribute: 0
   useVectorObs: 1
+  baseMaxLife: 100
   maxLife: 100
   life: 0
   dead: 0
   model: {fileID: 741731269335025616}
   boxCollider: {fileID: 0}
   foodScaling: 1.1
-  poisonScaling: 0.75
+  poisonScaling: 0.5
   gridSensor: {fileID: 5329047882144202293}
   useVectorFrozenFlag: 0
+  agentID: 0
+  foodCount: 0
+  poisonCount: 0
 --- !u!114 &8748463901024752038
 MonoBehaviour:
   m_ObjectHideFlags: 0

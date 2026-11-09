@@ -1,9 +1,10 @@
-using UnityEngine;
+using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using UnityEngine;
 using Random = UnityEngine.Random;
-
+using Stopwatch = System.Diagnostics.Stopwatch;
 public class FoodCollectorAgent : Agent
 {
     FoodCollectorSettings m_FoodCollecterSettings;
@@ -31,7 +32,7 @@ public class FoodCollectorAgent : Agent
     public bool useVectorObs;
 
     // Agent life
-    public float maxLife = 100, life;
+    public float baseMaxLife = 100, maxLife = 100, life;
     public bool dead = false;
     public GameObject model;
     public BoxCollider boxCollider;
@@ -42,7 +43,13 @@ public class FoodCollectorAgent : Agent
              "is checked, this option has no effect. This option is necessary for the " +
              "VisualFoodCollector scene.")]
     public bool useVectorFrozenFlag;
-
+    // data
+    public int agentID;
+    private Stopwatch stopwatch = new Stopwatch();
+    public int foodCount = 0, poisonCount = 0;
+    public static int num = -21;
+    float m_LastEpisodeReward;
+    float m_EpisodeStartTime = 0;
     EnvironmentParameters m_ResetParams;
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -54,6 +61,7 @@ public class FoodCollectorAgent : Agent
             if (life <= 0) Die();
             MoveAgent(actionBuffers);
         }
+        m_LastEpisodeReward = GetCumulativeReward();
     }
     public void Die()
     {
@@ -69,6 +77,7 @@ public class FoodCollectorAgent : Agent
     }
     public override void Initialize()
     {
+        stopwatch.Start();
         m_AgentRb = GetComponent<Rigidbody>();
         m_MyArea = area.GetComponent<FoodCollectorArea>();
         m_FoodCollecterSettings = FindObjectOfType<FoodCollectorSettings>();
@@ -192,12 +201,12 @@ public class FoodCollectorAgent : Agent
 
     void Poison()
     {
-        maxLife -= 10;
         life -= 20;
         m_Poisoned = true;
         m_EffectTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = badMaterial;
         model.transform.localScale *= poisonScaling;
+        maxLife = baseMaxLife * model.transform.localScale.x;
         gridSensor.transform.localPosition += boxCollider.size.x * (1 - poisonScaling) / 2 * new Vector3(0, 1, 0);
         boxCollider.size *= poisonScaling;
     }
@@ -210,12 +219,12 @@ public class FoodCollectorAgent : Agent
 
     void Satiate()
     {
-        maxLife += 5;
         life = Mathf.Min(maxLife, life + 10);
         m_Satiated = true;
         m_EffectTime = Time.time;
         gameObject.GetComponentInChildren<Renderer>().material = goodMaterial;
         model.transform.localScale *= foodScaling;
+        maxLife = baseMaxLife * model.transform.localScale.x;
         gridSensor.transform.localPosition -= boxCollider.size.x * (foodScaling - 1f) / 2 * new Vector3(0, 1, 0);
         boxCollider.size *= foodScaling;
     }
@@ -251,6 +260,11 @@ public class FoodCollectorAgent : Agent
 
     public override void OnEpisodeBegin()
     {
+        num += 1;
+        Debug.Log("yo " + num);
+        if (num >= 0)
+            WriteDataToCSV();
+
         Unfreeze();
         Unpoison();
         Unsatiate();
@@ -266,8 +280,105 @@ public class FoodCollectorAgent : Agent
             2f, Random.Range(-m_MyArea.range, m_MyArea.range))
             + area.transform.position;
         transform.rotation = Quaternion.Euler(new Vector3(0f, Random.Range(0, 360)));
+        foodCount = 0;
+        poisonCount = 0;
+
+        m_EpisodeStartTime = Time.time;
 
         SetResetParameters();
+    }
+
+    static readonly string[] Header = {
+    "id", "game", "date", "agentID", "final_reward", "trainer", "max_steps", "learning_rate",
+    "beta", "epsilon", "lambda", "num_epoch", "gamma", "strength", "batch_size", "buffer_size",
+    "hidden_units", "num_layers", "cpu_cores", "total_processor_time", "ram_mb", "working_set_b",
+    "private_memory_b", "gpu_model", "time_sec", "peak_ram_b", "avg_ram_mb", "steps_to_90pct",
+    "food_eaten", "poison_eaten", "final_size", "operating_system",
+    "neural_network_type", "currtime"
+};
+    void WriteDataToCSV()
+    {
+        Dictionary<string, string> entry = new Dictionary<string, string>();
+
+        entry.Add("id", num.ToString());
+        entry.Add("game", "FoodCollector");
+        entry.Add("date", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        entry.Add("agentID", agentID.ToString());
+        entry.Add("final_reward", m_LastEpisodeReward.ToString("F4", System.Globalization.CultureInfo.InvariantCulture));
+        entry.Add("food_eaten", foodCount.ToString());
+        entry.Add("poison_eaten", poisonCount.ToString());
+        entry.Add("final_size", model.transform.localScale.x.ToString("F3", System.Globalization.CultureInfo.InvariantCulture));
+
+        entry.Add("cpu_cores", SystemInfo.processorCount.ToString());
+        entry.Add("total_processor_time", System.Diagnostics.Process.GetCurrentProcess().TotalProcessorTime.ToString());
+        entry.Add("ram_mb", SystemInfo.systemMemorySize.ToString());
+        entry.Add("working_set_b", GetProcessMemoryMB(false).ToString()); //this is the total memory the whole unity project is taking up.
+        entry.Add("private_memory_b", GetProcessMemoryMB(true).ToString()); //this is the memory that the memory that belongs to the process.
+        entry.Add("gpu_model", SystemInfo.graphicsDeviceName);
+        entry.Add("operating_system", SystemInfo.operatingSystem);
+        entry.Add("time_sec", (Time.time - m_EpisodeStartTime).ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+        //change the next few values manually. The alternative is to read the value directly from the yaml file which is a pain. To do it conveniently you'd need a library called YamlDotNet.
+        //the default values are that of the worm. Find your agents corresponding config file in ml-agents/config.
+
+
+        // neural network settings
+        entry.Add("hidden_units", "256");
+        entry.Add("num_layers", "1");
+        entry.Add("trainer", "ppo");                
+        entry.Add("neural_network_type", "simple");
+        // hyperparameters
+        entry.Add("batch_size", "1024");
+        entry.Add("buffer_size", "10240");
+        entry.Add("learning_rate", "0.0003");
+        entry.Add("beta", "0.005");
+        entry.Add("epsilon", "0.2");
+        entry.Add("lambda", "0.95");
+        entry.Add("num_epoch", "3");
+        // reward signals
+        entry.Add("gamma", "0.99");
+        entry.Add("strength", "1.0");
+        entry.Add("max_steps", "2000000");
+        entry.Add("currtime", stopwatch.Elapsed.ToString());
+
+        var csvPath = System.IO.Path.Combine(Application.persistentDataPath, "FoodCollectorData.csv");
+        bool newFile = !System.IO.File.Exists(csvPath);
+
+        using (var writer = new System.IO.StreamWriter(csvPath, true))
+        {
+            if (newFile)
+                writer.WriteLine(string.Join(",", Header));
+
+            for (int i = 0; i < Header.Length; i++)
+            {
+                if (i > 0) writer.Write(",");
+
+                string value;
+                entry.TryGetValue(Header[i], out value);
+                value = value ?? string.Empty;
+
+                if (value.Contains(",") || value.Contains("\"") || value.Contains("\n"))
+                    value = "\"" + value.Replace("\"", "\"\"") + "\"";
+
+                writer.Write(value);
+            }
+            writer.WriteLine();
+        }
+    }
+
+    static long GetProcessMemoryMB(bool privateMemory)
+    {
+        try
+        {
+            using (var process = System.Diagnostics.Process.GetCurrentProcess())
+            {
+                var bytes = privateMemory ? process.PrivateMemorySize64 : process.WorkingSet64;
+                return bytes;
+            }
+        }
+        catch
+        {
+            return 0;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -276,6 +387,7 @@ public class FoodCollectorAgent : Agent
         {
             Satiate();
             collision.gameObject.GetComponent<FoodLogic>().OnEaten();
+            foodCount += 1;
             AddReward(2f);
             if (contribute)
             {
@@ -286,7 +398,7 @@ public class FoodCollectorAgent : Agent
         {
             Poison();
             collision.gameObject.GetComponent<FoodLogic>().OnEaten();
-
+            poisonCount += 1;
             AddReward(-1f);
             if (contribute)
             {

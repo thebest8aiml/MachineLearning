@@ -1,6 +1,6 @@
+using Unity.MLAgents;
 using UnityEngine;
 using UnityEngine.UI;
-using Unity.MLAgents;
 
 public class FoodCollectorSettings : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class FoodCollectorSettings : MonoBehaviour
 
     public int totalScore;
     public Text scoreText;
+
 
     StatsRecorder m_Recorder;
 
@@ -25,11 +26,10 @@ public class FoodCollectorSettings : MonoBehaviour
         ClearObjects(GameObject.FindGameObjectsWithTag("food"));
         ClearObjects(GameObject.FindGameObjectsWithTag("badFood"));
 
-        agents = GameObject.FindGameObjectsWithTag("agent");
         listArea = FindObjectsOfType<FoodCollectorArea>();
         foreach (var fa in listArea)
         {
-            fa.ResetFoodArea(agents);
+            fa.ResetFoodArea();
         }
 
         totalScore = 0;
