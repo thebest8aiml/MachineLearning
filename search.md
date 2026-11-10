@@ -1,0 +1,22 @@
+
+("machine learning"|"ML algorithm")
+("estimation"|"prediction")
+"resource utilization"
+"training"
+"computer science"
+"machine learning prediction"
+-"medicine"
+-"disease"
+-"protein"
+-"rna"
+-"dna"
+-"natural disaster"
+-"flood"
+-"earthquake"
+-"stocks"
+-"stock"
+-"water"
+-"solar"
+-"nature"
+-"air"
+-"crime"
