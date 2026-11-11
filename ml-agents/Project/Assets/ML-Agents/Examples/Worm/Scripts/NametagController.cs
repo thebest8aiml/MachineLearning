@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
-using Unity.MLAgentsExamples;
 using UnityEngine;
 
 public class NametagController : MonoBehaviour
@@ -34,7 +33,7 @@ public class NametagController : MonoBehaviour
 
         if (randomizeNames)
         {
-            bool uniqueNames = firstNames.Length * lastNames.Length >= nametags.Length;
+            bool uniqueNames = firstNames.Length * lastNames.Length >= nametags.Length; // fallback if there are not enough unique names to go around
             HashSet<(int fName, int lName)> usedNames = new();
 
             foreach (Nametag nametag in nametags)
@@ -61,25 +60,13 @@ public class NametagController : MonoBehaviour
 
     [CanBeNull] public Nametag NametagOf([CanBeNull] Transform followee)
     {
-        if (followee is null)
-        {
-            return null;
-        }
-
-        if (followeeNametags.TryGetValue(followee, out Nametag nametag))
-        {
-            return nametag;
-        }
-
-        return null;
+        return followee is null ? null : followeeNametags.GetValueOrDefault(followee);
     }
 
     public void OnMainTargetChanged(Transform newTarget, int idx)
     {
-        if (currentWorm != null)
-        {
-            var wName = NametagOf(newTarget)?.Name() ?? "Unknown";
-            currentWorm.text = $"Worm #{idx}: {wName}";
-        }
+        if (currentWorm == null) return;
+        var wName = NametagOf(newTarget)?.Name() ?? "Unknown";
+        currentWorm.text = $"Worm #{idx}: {wName}";
     }
 }
