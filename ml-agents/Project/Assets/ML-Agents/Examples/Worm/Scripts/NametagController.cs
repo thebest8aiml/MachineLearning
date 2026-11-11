@@ -34,12 +34,26 @@ public class NametagController : MonoBehaviour
 
         if (randomizeNames)
         {
+            bool uniqueNames = firstNames.Length * lastNames.Length >= nametags.Length;
+            HashSet<(int fName, int lName)> usedNames = new();
+
             foreach (Nametag nametag in nametags)
             {
                 if (nametag.textTag is null) continue;
 
-                string firstName = firstNames[Random.Range(0, firstNames.Length)];
-                string lastName = lastNames[Random.Range(0, lastNames.Length)];
+                int fNameId, lNameId;
+
+                do
+                {
+                    fNameId = Random.Range(0, firstNames.Length);
+                    lNameId = Random.Range(0, lastNames.Length);
+                }
+                while (usedNames.Contains((fNameId, lNameId)) && uniqueNames);
+
+                usedNames.Add((fNameId, lNameId));
+
+                string firstName = firstNames[fNameId];
+                string lastName = lastNames[lNameId];
                 nametag.textTag.text = $"{firstName} {lastName}";
             }
         }
