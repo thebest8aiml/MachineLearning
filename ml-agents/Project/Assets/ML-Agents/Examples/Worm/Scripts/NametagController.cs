@@ -14,7 +14,7 @@ public class NametagController : MonoBehaviour
     public bool randomizeNames = true;
 
     public string[] firstNames = { "Wiggly", "Bobbie", "Sally", "Wormy", "John", "Douglas", "Erica", "Kelly", "Nathan", "Alex", "Alexandra", "Emily", "Mihai", "Minh", "Ilya", "Vlad", "Nikos", "Robbie", "Bob", "Joshua", "Mick", "Hailey", "Pete", "Donald", "Scott", "Elizabeth" };
-    public string[] lastNames = { "McWormface", "Wormington", "Wormsworth", "the Wormskey", "the True Worm", "Wormer", "Interwormer", "Wiggleston" };
+    public string[] lastNames = { "McWormface", "Wormington", "Wormsworth", "Wormskey", "the True Worm", "Wormer", "Wormey", "Wiggleston", "the BCS Student" };
 
     void Start()
     {
