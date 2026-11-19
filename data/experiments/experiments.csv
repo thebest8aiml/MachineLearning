@@ -1,4 +1,4 @@
-run_id,game,max_steps,learning_rate, hidden_units
+run_id,game,max_steps,learning_rate,hidden_units
 1,pushblock,100000,0.0001,64 
 2,foodcollector,100000,0.0001,128 
 3,worm,100000,0.0001,256 
