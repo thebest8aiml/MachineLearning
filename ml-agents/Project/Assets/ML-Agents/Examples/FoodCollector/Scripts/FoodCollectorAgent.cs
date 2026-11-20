@@ -289,7 +289,7 @@ public class FoodCollectorAgent : Agent
     }
 
     static readonly string[] Header = {
-    "id", "game", "date", "agentID", "final_reward", "trainer", "max_steps", "learning_rate",
+    "area_id", "agent_id", "game", "date", "agentID", "final_reward", "trainer", "max_steps", "learning_rate",
     "beta", "epsilon", "lambda", "num_epoch", "gamma", "strength", "batch_size", "buffer_size",
     "hidden_units", "num_layers", "cpu_cores", "total_processor_time", "ram_mb", "working_set_b",
     "private_memory_b", "gpu_model", "time_sec", "peak_ram_b", "avg_ram_mb", "steps_to_90pct",
@@ -300,7 +300,8 @@ public class FoodCollectorAgent : Agent
     {
         Dictionary<string, string> entry = new Dictionary<string, string>();
 
-        entry.Add("id", num.ToString());
+        entry.Add("area_id", area.GetComponent<FoodCollectorArea>().areaID.ToString());
+        entry.Add("agent_id", agentID.ToString());
         entry.Add("game", "FoodCollector");
         entry.Add("date", System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
         entry.Add("agentID", agentID.ToString());

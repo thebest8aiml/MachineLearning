@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class FoodCollectorArea : Area
 {
+    public int areaID;
     public GameObject food;
     public GameObject badFood;
     public int numFood;

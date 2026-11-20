@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 6
+    VectorObservationSize: 0
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
@@ -332,7 +332,7 @@ MonoBehaviour:
   frozenMaterial: {fileID: 2100000, guid: 66163cf35956a4be08e801b750c26f33, type: 2}
   myLaser: {fileID: 742597886178865080}
   contribute: 0
-  useVectorObs: 1
+  useVectorObs: 0
   baseMaxLife: 100
   maxLife: 100
   life: 0
