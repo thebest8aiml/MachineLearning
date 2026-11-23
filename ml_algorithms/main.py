@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 class Application:
     CONN: sqlite3.Connection
@@ -13,9 +14,10 @@ class Application:
     def run(self) -> int:
         print(f"Running {self.name}")
         # TODO: add your logic here
-        #self.flushdb()
         # self.createtable()
+        os.system("bash databasesetup.bash")
         self.outputcontents()
+        self.flushdb()
 
         print(f"Finished running {self.name}")
         return 0

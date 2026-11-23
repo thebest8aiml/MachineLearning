@@ -144,3 +144,4 @@ crashlytics-build.properties
 
 /ml_algorithms/__pycache__/
 /ml_algorithms/.venv/
+/ml_algorithms/data.db
