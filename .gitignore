@@ -141,3 +141,6 @@ crashlytics-build.properties
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+/ml_algorithms/__pycache__/
+/ml_algorithms/.venv/
