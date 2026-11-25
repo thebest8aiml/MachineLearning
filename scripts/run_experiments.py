@@ -1,3 +1,28 @@
+'''
+Runs every YAML one after another
+
+A run is finished when results/<run_id>/run_info.json exists with exit code 0. Finished runs are skipped next time and crashed/stopped ones are redone with --force to overwrite the previous ones.
+
+For each run it saves results/<run_id>/run_info.json with the training time and the RAM usage.
+
+-------------------------
+
+How to use:
+
+1. Open a terminal, activate venv
+2. Open the game in unity, DO NOT START YET
+3. Start the script: python scripts/run_experiments.py
+4. For each run:
+    - Terminal asks you for enter, press it
+    - Trainer starts and prints it is waiting for unity
+    - Press Play in Unity
+    - Wait. When trainer prints that training is finished, stop the game. Script then asks you about next run.
+5. Results: results/<run_id>/run_info.json
+
+'''
+
+
+
 import glob
 import json
 import os
@@ -6,11 +31,13 @@ import time
 import psutil
 import threading
 import sys
+import re
 
 CONFIG_DIR = "data/experiments/configs/foodCollector/foodCollector_generated"
 RESULTS_DIR = "results"
 
 ENV_PATH = None
+TIMEOUT_WAIT = 300
 
 def process_tree_rss(process):
     total = 0
@@ -26,6 +53,10 @@ def process_tree_rss(process):
         pass
 
     return total
+
+def sort_yaml(path):
+    name = os.path.basename(path)
+    return [int(part) if part.isdigit() else part.lower() for part in re.split(r"(\d+)", name)]
 
 
 def is_finished(run_dir):
@@ -48,7 +79,7 @@ def run_one(yaml_path):
         print(f"Skipping {run_id} (already finished)")
         return
 
-    cmd = [sys.executable, "-m", "mlagents.trainers.learn", yaml_path, f"--run-id={run_id}"]
+    cmd = [sys.executable, "-m", "mlagents.trainers.learn", yaml_path, f"--run-id={run_id}", f"--timeout-wait={TIMEOUT_WAIT}"]
     if os.path.exists(run_dir):
         cmd.append("--force")
 
@@ -112,7 +143,7 @@ if __name__ == "__main__":
     if psutil is None:
         print("psutil is not installed: peak RAM will not be recorded")
 
-    yamls = sorted(glob.glob(os.path.join(CONFIG_DIR, "*.yaml")))
+    yamls = sorted(glob.glob(os.path.join(CONFIG_DIR, "*.yaml")), key=sort_yaml)
     print(f"Found {len(yamls)} configs")
     for path in yamls:
         run_one(path)
