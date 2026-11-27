@@ -71,6 +71,17 @@ def is_finished(run_dir):
         return False
 
 
+def stop_trainer(proc, reader):
+    try:
+        proc.wait(timeout=60)
+
+    except (subprocess.TimeoutExpired, KeyboardInterrupt):
+        proc.kill()
+        proc.wait()
+
+    reader.join(timeout=5)
+
+
 def run_one(yaml_path):
     run_id = os.path.splitext(os.path.basename(yaml_path))[0]
     run_dir = os.path.join(RESULTS_DIR, run_id)
@@ -107,12 +118,19 @@ def run_one(yaml_path):
     peak_bytes = 0
     samples = []
 
-    while process.poll() is None:
-        if psutil:
-            rss = process_tree_rss(process)
-            peak_bytes = max(peak_bytes, rss)
-            samples.append(rss)
-        time.sleep(2)
+    try:
+        while process.poll() is None:
+            if psutil:
+                rss = process_tree_rss(process)
+                peak_bytes = max(peak_bytes, rss)
+                samples.append(rss)
+            time.sleep(2)
+
+    except KeyboardInterrupt:
+        print(f"\nInterrupted. Waiting for the trainer of {run_id} to stop " f"(Ctrl+C again to force)")
+        stop_trainer(process, reader)
+        print(f"{run_id} was interrupted")
+        sys.exit(130)
 
 
     reader.join(timeout=5)
@@ -148,5 +166,5 @@ if __name__ == "__main__":
     for path in yamls:
         run_one(path)
 
-    #yaml_path = "data/experiments/configs/foodCollector_generated/test.yaml"
-    #run_one(yaml_path)
+    yaml_path = "data/experiments/configs/foodCollector/foodCollector_generated/test.yaml"
+    run_one(yaml_path)
