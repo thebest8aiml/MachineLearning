@@ -1,0 +1,38 @@
+{
+    "GridFoodCollector": {
+        "checkpoints": [
+            {
+                "steps": 499956,
+                "file_path": "results\\11\\GridFoodCollector\\GridFoodCollector-499956.onnx",
+                "reward": null,
+                "creation_time": 1795820140.9408708,
+                "auxillary_file_paths": [
+                    "results\\11\\GridFoodCollector\\GridFoodCollector-499956.pt"
+                ]
+            },
+            {
+                "steps": 500020,
+                "file_path": "results\\11\\GridFoodCollector\\GridFoodCollector-500020.onnx",
+                "reward": null,
+                "creation_time": 1795820141.0071654,
+                "auxillary_file_paths": [
+                    "results\\11\\GridFoodCollector\\GridFoodCollector-500020.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500020,
+            "file_path": "results\\11\\GridFoodCollector.onnx",
+            "reward": null,
+            "creation_time": 1795820141.0071654,
+            "auxillary_file_paths": [
+                "results\\11\\GridFoodCollector\\GridFoodCollector-500020.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.8.0+cpu"
+    }
+}

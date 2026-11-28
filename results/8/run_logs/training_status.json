@@ -1,0 +1,29 @@
+{
+    "GridFoodCollector": {
+        "checkpoints": [
+            {
+                "steps": 100205,
+                "file_path": "results\\8\\GridFoodCollector\\GridFoodCollector-100205.onnx",
+                "reward": null,
+                "creation_time": 1795816339.573473,
+                "auxillary_file_paths": [
+                    "results\\8\\GridFoodCollector\\GridFoodCollector-100205.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 100205,
+            "file_path": "results\\8\\GridFoodCollector.onnx",
+            "reward": null,
+            "creation_time": 1795816339.573473,
+            "auxillary_file_paths": [
+                "results\\8\\GridFoodCollector\\GridFoodCollector-100205.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.0.0",
+        "torch_version": "2.8.0+cpu"
+    }
+}
